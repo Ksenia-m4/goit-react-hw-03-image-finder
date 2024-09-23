@@ -1,5 +1,3 @@
-// Для HTTP-запросов используй публичный сервис поиска изображений Pixabay. Зарегистрируйся и получи приватный ключ доступа.
-
 // URL-строка HTTP-запроса.
 // https://pixabay.com/api/?q=cat&page=1&key=your_key&image_type=photo&orientation=horizontal&per_page=12
 
@@ -17,8 +15,26 @@
 const BASE_URL = "https://pixabay.com/api";
 const API_KEY = "45653966-87357a1b7b4dbce7fb63449bc";
 
+// function getParams() {
+//   return {
+//     q: searchQuery,
+//     image_type: "photo",
+//     orientation: "horizontal",
+//     safesearch: true,
+//     per_page: 12,
+//     page: this.page,
+//   };
+// }
+
 function getImages(searchQuery) {
-  return fetch(`${BASE_URL}/?q=${searchQuery}&key=${API_KEY}`);
+  return fetch(`${BASE_URL}/?q=${searchQuery}&key=${API_KEY}`).then(
+    (responce) => {
+      if (responce.ok) {
+        return responce.json();
+      }
+      return Promise.reject(new Error("Failed to fetch data from API"));
+    }
+  );
 }
 
 export default getImages;

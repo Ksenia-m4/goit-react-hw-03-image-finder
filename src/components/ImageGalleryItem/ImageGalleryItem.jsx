@@ -1,9 +1,9 @@
 // Компонент элемента списка с изображением. Создает DOM-элемент следующей структуры.
 
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({ webformatURL, largeImageURL }) => {
   return (
-    <li class="gallery-item">
-      <img src="" alt="" />
+    <li className="ImageGalleryItem">
+      <img src={webformatURL} alt="" className="ImageGalleryItem-image" />
     </li>
   );
 };

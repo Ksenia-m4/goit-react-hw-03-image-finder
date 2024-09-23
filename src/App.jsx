@@ -1,24 +1,16 @@
 import { Component } from "react";
 
 import { Searchbar } from "./components/Searchbar/Searchbar.jsx";
-
-import getImages from "./services/getImages.js";
+import { ImageGallery } from "./components/ImageGallery/ImageGallery.jsx";
 
 import "./App.css";
 
 class App extends Component {
-  state = {};
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
-      getImages(this.state.searchQuery).then((resp) => {
-        console.log(resp);
-      });
-    }
-  }
+  state = {
+    searchQuery: "",
+  };
 
   handleSearch = (searchQuery) => {
-    console.log(searchQuery);
     this.setState({ searchQuery });
   };
 
@@ -26,6 +18,7 @@ class App extends Component {
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
+        <ImageGallery searchQuery={this.state.searchQuery} />
       </>
     );
   }
