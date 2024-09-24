@@ -1,6 +1,7 @@
 // Компонент принимает один проп onSubmit - функцию для передачи значения инпута при сабмите формы. Создает DOM-элемент следующей структуры.
 
 import { Component } from "react";
+import Notiflix from "notiflix";
 
 export class Searchbar extends Component {
   state = {
@@ -9,6 +10,11 @@ export class Searchbar extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
+
+    if (this.state.searchQuery === "") {
+      Notiflix.Notify.failure("Please enter a search query.");
+      return;
+    }
 
     this.props.onSubmit(this.state.searchQuery);
 
