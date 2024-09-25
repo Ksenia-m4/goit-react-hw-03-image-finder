@@ -2,6 +2,8 @@ import { Component } from "react";
 import { createPortal } from "react-dom";
 import PropTypes from "prop-types";
 
+import { Overlay, ModalImage } from "./Modal.styled.js";
+
 const modalRoot = document.querySelector("#modal-root");
 
 export class Modal extends Component {
@@ -29,11 +31,11 @@ export class Modal extends Component {
     const { alt, largeImageURL } = this.props.children;
 
     return createPortal(
-      <div className="Overlay" onClick={this.handleOverlayClick}>
-        <div className="Modal">
+      <Overlay onClick={this.handleOverlayClick}>
+        <ModalImage>
           <img src={largeImageURL} alt={alt} />
-        </div>
-      </div>,
+        </ModalImage>
+      </Overlay>,
       modalRoot
     );
   }

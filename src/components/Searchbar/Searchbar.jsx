@@ -2,20 +2,29 @@ import { Component } from "react";
 import Notiflix from "notiflix";
 import PropTypes from "prop-types";
 
+import {
+  Header,
+  SearchForm,
+  SearchFormButton,
+  SearchFormButtonLabel,
+  SearchFormInput,
+} from "./Searchbar.styled";
+
 export class Searchbar extends Component {
   state = {
     searchQuery: "",
   };
 
   handleSubmit = (e) => {
+    const { searchQuery } = this.state;
     e.preventDefault();
 
-    if (this.state.searchQuery === "") {
+    if (searchQuery === "") {
       Notiflix.Notify.failure("Please enter a search query.");
       return;
     }
 
-    this.props.onSubmit(this.state.searchQuery);
+    this.props.onSubmit(searchQuery);
 
     this.handleResetForm();
   };
@@ -35,10 +44,9 @@ export class Searchbar extends Component {
 
   render() {
     return (
-      <header className="Searchbar">
-        <form className="SearchForm" onSubmit={this.handleSubmit}>
-          <input
-            className="SearchForm-input"
+      <Header>
+        <SearchForm onSubmit={this.handleSubmit}>
+          <SearchFormInput
             type="text"
             autoComplete="off"
             autoFocus
@@ -47,11 +55,11 @@ export class Searchbar extends Component {
             value={this.state.searchQuery}
           />
 
-          <button type="submit" className="SearchForm-button">
-            <span className="SearchForm-button-label">Search</span>
-          </button>
-        </form>
-      </header>
+          <SearchFormButton type="submit">
+            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+          </SearchFormButton>
+        </SearchForm>
+      </Header>
     );
   }
 }

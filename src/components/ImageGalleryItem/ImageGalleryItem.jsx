@@ -1,10 +1,11 @@
 import PropTypes from "prop-types";
+import { GalleryImage, GalleryItem } from "./ImageGalleryItem.styled";
 
 export const ImageGalleryItem = ({ webformatURL, tags, id, onClick }) => {
   return (
-    <li className="ImageGalleryItem" id={id} onClick={onClick}>
-      <img src={webformatURL} alt={tags} className="ImageGalleryItem-image" />
-    </li>
+    <GalleryItem id={id} onClick={onClick}>
+      <GalleryImage src={webformatURL} alt={tags} />
+    </GalleryItem>
   );
 };
 
@@ -13,6 +14,4 @@ ImageGalleryItem.propTypes = {
   onClick: PropTypes.func.isRequired,
   tags: PropTypes.string.isRequired,
   webformatURL: PropTypes.string.isRequired,
-
-  // searchQuery: PropTypes.string.isRequired,
 };

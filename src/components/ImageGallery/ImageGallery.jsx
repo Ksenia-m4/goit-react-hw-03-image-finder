@@ -8,6 +8,8 @@ import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
 import { Loader } from "../Loader/Loader";
 
+import { ImageGalleryList } from "./ImageGallery.styled.js";
+
 export class ImageGallery extends Component {
   state = {
     searchQuery: "",
@@ -19,12 +21,10 @@ export class ImageGallery extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.searchQuery !== this.props.searchQuery) {
+    const { searchQuery } = this.props;
+    if (prevProps.searchQuery !== searchQuery) {
       // Если новый запрос, сбрасываем страницу и изображения
-      this.setState(
-        { images: [], page: 1, searchQuery: this.props.searchQuery },
-        this.fetchImages
-      );
+      this.setState({ images: [], page: 1, searchQuery }, this.fetchImages);
     }
   }
 
@@ -73,7 +73,7 @@ export class ImageGallery extends Component {
       <>
         {isLoading && <Loader />}
         {images.length !== 0 && (
-          <ul className="ImageGallery">
+          <ImageGalleryList>
             {images.map(({ webformatURL, largeImageURL, tags, id }) => {
               return (
                 <ImageGalleryItem
@@ -85,7 +85,7 @@ export class ImageGallery extends Component {
                 ></ImageGalleryItem>
               );
             })}
-          </ul>
+          </ImageGalleryList>
         )}
 
         {showModal && <Modal onClose={this.closeModal}>{selectedImage}</Modal>}

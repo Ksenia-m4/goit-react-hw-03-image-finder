@@ -1,9 +1,10 @@
 import { Circles } from "react-loader-spinner";
+import { Spinner } from "./Loader.styled";
 
 export const Loader = () => {
   return (
-    <div className="Spinner">
-      <Circles height="80" width="80" color="#4fa94d" ariaLabel="loading" />
-    </div>
+    <Spinner>
+      <Circles height="80" width="80" ariaLabel="loading" color="#3f51b5" />
+    </Spinner>
   );
 };
