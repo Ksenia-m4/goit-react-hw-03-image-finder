@@ -1,12 +1,12 @@
 import { Component } from "react";
 import Notiflix from "notiflix";
 import PropTypes from "prop-types";
+import { CiSearch } from "react-icons/ci";
 
 import {
   Header,
   SearchForm,
   SearchFormButton,
-  SearchFormButtonLabel,
   SearchFormInput,
 } from "./Searchbar.styled";
 
@@ -56,7 +56,7 @@ export class Searchbar extends Component {
           />
 
           <SearchFormButton type="submit">
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+            <CiSearch size={24} />
           </SearchFormButton>
         </SearchForm>
       </Header>
