@@ -1,10 +1,12 @@
 import { Component } from "react";
+
 import Notiflix from "notiflix";
 
 import getImages from "./../../services/getImages";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
 import { Button } from "../Button/Button";
 import { Modal } from "../Modal/Modal";
+import { Loader } from "../Loader/Loader";
 
 export class ImageGallery extends Component {
   state = {
@@ -13,6 +15,7 @@ export class ImageGallery extends Component {
     page: 1,
     showModal: false,
     selectedImage: null,
+    isLoading: false,
   };
 
   componentDidUpdate(prevProps) {
@@ -27,6 +30,7 @@ export class ImageGallery extends Component {
 
   fetchImages = () => {
     const { searchQuery, page } = this.state;
+    this.setState({ isLoading: true });
 
     getImages(searchQuery, page)
       .then((resp) => {
@@ -46,7 +50,8 @@ export class ImageGallery extends Component {
         Notiflix.Notify.failure(
           "Failed to load images. Please try again later."
         );
-      });
+      })
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   onLoadMore = () => {
@@ -62,23 +67,26 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { images, showModal, selectedImage } = this.state;
+    const { images, showModal, isLoading } = this.state;
 
     return (
       <>
-        <ul className="ImageGallery">
-          {images.map(({ webformatURL, largeImageURL, tags, id }) => {
-            return (
-              <ImageGalleryItem
-                key={webformatURL}
-                webformatURL={webformatURL}
-                tags={tags}
-                id={id}
-                onClick={() => this.openModal(largeImageURL, tags)}
-              ></ImageGalleryItem>
-            );
-          })}
-        </ul>
+        {isLoading && <Loader />}
+        {images.length !== 0 && (
+          <ul className="ImageGallery">
+            {images.map(({ webformatURL, largeImageURL, tags, id }) => {
+              return (
+                <ImageGalleryItem
+                  key={webformatURL}
+                  webformatURL={webformatURL}
+                  tags={tags}
+                  id={id}
+                  onClick={() => this.openModal(largeImageURL, tags)}
+                ></ImageGalleryItem>
+              );
+            })}
+          </ul>
+        )}
 
         {showModal && (
           <Modal onClose={this.closeModal}>{this.state.selectedImage}</Modal>
