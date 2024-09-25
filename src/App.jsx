@@ -15,10 +15,11 @@ class App extends Component {
   };
 
   render() {
+    const { searchQuery } = this.state;
     return (
       <>
         <Searchbar onSubmit={this.handleSearch} />
-        <ImageGallery searchQuery={this.state.searchQuery} />
+        <ImageGallery searchQuery={searchQuery} />
       </>
     );
   }

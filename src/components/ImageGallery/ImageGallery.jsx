@@ -1,6 +1,6 @@
 import { Component } from "react";
-
 import Notiflix from "notiflix";
+import PropTypes from "prop-types";
 
 import getImages from "./../../services/getImages";
 import { ImageGalleryItem } from "../ImageGalleryItem/ImageGalleryItem";
@@ -67,7 +67,7 @@ export class ImageGallery extends Component {
   };
 
   render() {
-    const { images, showModal, isLoading } = this.state;
+    const { images, showModal, isLoading, selectedImage } = this.state;
 
     return (
       <>
@@ -88,14 +88,14 @@ export class ImageGallery extends Component {
           </ul>
         )}
 
-        {showModal && (
-          <Modal onClose={this.closeModal}>{this.state.selectedImage}</Modal>
-        )}
+        {showModal && <Modal onClose={this.closeModal}>{selectedImage}</Modal>}
 
-        {images.length !== 0 && (
-          <Button className="Button" onClick={this.onLoadMore}></Button>
-        )}
+        {images.length !== 0 && <Button onClick={this.onLoadMore}></Button>}
       </>
     );
   }
 }
+
+ImageGallery.propTypes = {
+  searchQuery: PropTypes.string.isRequired,
+};
