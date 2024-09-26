@@ -20,13 +20,20 @@ export class ImageGallery extends Component {
     isLoading: false,
   };
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     const { searchQuery } = this.props;
     if (prevProps.searchQuery !== searchQuery) {
-      // Если новый запрос, сбрасываем страницу и изображения
       this.setState({ images: [], page: 1, searchQuery }, this.fetchImages);
+    } else if (prevState.page !== this.state.page) {
+      this.fetchImages();
     }
   }
+
+  onLoadMore = () => {
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  };
 
   fetchImages = () => {
     const { searchQuery, page } = this.state;
@@ -43,7 +50,6 @@ export class ImageGallery extends Component {
 
         this.setState((prevState) => ({
           images: [...prevState.images, ...resp],
-          page: prevState.page + 1,
         }));
       })
       .catch(() => {
@@ -52,10 +58,6 @@ export class ImageGallery extends Component {
         );
       })
       .finally(() => this.setState({ isLoading: false }));
-  };
-
-  onLoadMore = () => {
-    this.fetchImages();
   };
 
   openModal = (largeImageURL, alt) => {
