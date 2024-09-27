@@ -22,9 +22,13 @@ export class ImageGallery extends Component {
 
   componentDidUpdate(prevProps, prevState) {
     const { searchQuery } = this.props;
+
     if (prevProps.searchQuery !== searchQuery) {
-      this.setState({ images: [], page: 1, searchQuery }, this.fetchImages);
-    } else if (prevState.page !== this.state.page) {
+      this.setState({ images: [], page: 1, searchQuery });
+    } else if (
+      prevState.page !== this.state.page ||
+      prevState.searchQuery !== this.state.searchQuery
+    ) {
       this.fetchImages();
     }
   }
